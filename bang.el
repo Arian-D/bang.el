@@ -1,13 +1,21 @@
 (defcustom !bangs
-  '(("w" . ("Wikipedia" . "https://en.wikipedia.org/w/index.php?search=%s"))
-    ("a" . ("Amazon" . "https://www.amazon.com/s?k=%s")) 
-    ("imdb" . ("IMDB" . "https://www.imdb.com/find?s=all&q=%s")))
+  '(("w" . ("Wikipedia"
+  "https://en.wikipedia.org/w/index.php?search=%s" " "))
+    ("a" . ("Amazon" "https://amazon.com/s?k=%s" " ")) 
+    ("gh" . ("GitHub" "https://github.com/search?q=%s" " ")) 
+    ("r" . ("Reddit" "https://reddit.com/search?q=%s" " ")) 
+    ("g" . ("GitHub" "https://google.com/search?q=%s" " ")) 
+    ("imdb" . ("IMDB" "https://imdb.com/find?s=all&q=%s")))
   "A list of bangs")
 
 (defun bang--annotate (b)
-  (format "\t%s"
-	  (cadr
-	   (assoc b !bangs))))
+  (let* ((match (assoc b !bangs))
+	 (name (cadr match))
+	 (icon (cadddr match)))
+    (format "\t%s\t%s"
+	    (or icon "🔍 ")
+	    name)))
+
 
 (defun ! ()
   "Pick a bang from `!bangs', enter search keyword, and open in
@@ -17,8 +25,8 @@
 	  (list :annotation-function
 		#'bang--annotate))
 	 (bang (completing-read "❕" !bangs))
-	 (template-url (cddr (assoc bang !bangs)))
-	 (search (read-string "> "))
+	 (template-url (caddr (assoc bang !bangs)))
+	 (search (read-string "🔍 "))
 	 (url (format template-url search)))
     (browse-url url)))
 
