@@ -1,6 +1,6 @@
 #+title: Bang.el
 
-DuckDuckGo-style bangs for emacs
+DuckDuckGo-style [[https://duckduckgo.com/bang][bangs]] for [[https://www.gnu.org/software/emacs/][Emacs]]
 
 * Installation
 First, install [[https://github.com/domtronn/all-the-icons.el][all-the-icons]] for pretty icons. Then, use [[https://github.com/radian-software/straight.el][straight.el]]
@@ -14,15 +14,53 @@ to install the package.
 * Usage
 Try ~M-x !~, and then go on from there 🙂
 
-* TODO Configuration
+* Configuration
+** Adding bangs
+All the "bangs" are kept in the ~!bangs~ variable. A simple ~C-h v !bangs~
+would show you the current value, and how it is structured, which is
+just an [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Association-Lists.html][alist]].
 
-* TODO Comments and Limitations
+Let's say you want to add a new bang for [[https://www.justwatch.com/][JustWatch]]. It would look
+something like this
+#+begin_src emacs-lisp
+  (add-to-list '!bangs
+               '("jwh" . ("JustWatch" . "https:/justwatch.com/us/search?q=%s")))
+#+end_src
 
-* TODO [2/6] Todos
+You can think of it as a whole list or as nested [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Cons-Cell-Type.html][cons cells]]. The ~car~
+is the bang, the ~cadr~ is how you refer to the website, and lastly the
+url with the query slot left as ~%s~ which will be passed to [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Formatting-Strings.html][format]].
+
+That's it! Next time you try to run ~M-x !~ you will see it as an
+option.
+
+** Default browser
+By default, Emacs uses the default browser (duh!). If you want this
+behavior to change, you can easily modify the
+~browse-url-browser-function~ variable.
+
+For example, let's say your default browser is Firefox, but you'd like
+your search results to be opened in Chrome. You can add this to your
+config:
+#+begin_src emacs-lisp
+  (setq browse-url-browser-function #'browse-url-chrome)
+#+end_src
+
+* Comments and Limitations
+- This is not a clone of DuckDuckGo, meaning this package is not meant to
+  replicate duckduckgo's behavior within Emacs (though it can). The
+  purpose is to have control over the naming so that it would match
+  your workflow.
+- Completions don't show up while typing, which is a nice-to-have, but
+  sadly most of these websites don't have an open API, have rate
+  limiting, and/or require authentication.
+
+* IN-PROGRESS [3/7] Todos
 
 - [ ] Increase the list to include most of the top duckduckgo bangs
-- [ ] Add the configuration section
 - [ ] Switch to a default search engine
 - [ ] Add a function/macro to create native functions out of each bang
+- [ ] Maybe ~defgroup~?
+- [X] Add the configuration section
 - [X] Add icons to the ~!bangs~ list
 - [X] Fix space formatting
