@@ -1,3 +1,25 @@
 #+title: Bang.el
 
 DuckDuckGo-style bangs for emacs
+
+* Installation
+Either manually clone and load, or use [[https://github.com/radian-software/straight.el][straight.el]]:
+#+begin_src emacs-lisp
+  (use-package bang
+    :straight
+    (bang :host github :repo "Arian-D/bang.el"))
+#+end_src
+
+* Usage
+Try ~M-x !~, and then go on from there 🙂
+
+* TODO Configuration
+
+* TODO Comments and Limitations
+
+* TODO [1/4] Todos
+
+- [ ] Add icons to the ~!bangs~ list
+- [ ] Increase the list to include most of the top duckduckgo bangs
+- [ ] Add the configuration section
+- [X] Fix space formatting
