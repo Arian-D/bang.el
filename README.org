@@ -24,7 +24,7 @@ Let's say you want to add a new bang for [[https://www.justwatch.com/][JustWatch
 something like this
 #+begin_src emacs-lisp
   (add-to-list '!bangs
-               '("jwh" . ("JustWatch" . "https:/justwatch.com/us/search?q=%s")))
+               '("jwh" . ("JustWatch" "https:/justwatch.com/us/search?q=%s")))
 #+end_src
 
 You can think of it as a whole list or as nested [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Cons-Cell-Type.html][cons cells]]. The ~car~
@@ -44,6 +44,18 @@ your search results to be opened in Chrome. You can add this to your
 config:
 #+begin_src emacs-lisp
   (setq browse-url-browser-function #'browse-url-chrome)
+#+end_src
+
+** Keybindings
+This package intends to be non-intrusive, so _no_ keybindings are set by
+default. A simple example to map it to ~C-!~ would be this:
+#+begin_src emacs-lisp
+  (define-key (current-global-map) (kbd "C-!") #'!)
+#+end_src
+
+Another example for [[https://github.com/emacs-evil/evil][evil]] users leveraging ~<leader>~ would be this:
+#+begin_src emacs-lisp
+  (evil-global-set-key 'normal (kbd "<leader> !") #'!)
 #+end_src
 
 * Comments and Limitations
