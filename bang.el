@@ -4,8 +4,10 @@
     ("a" . ("Amazon" "https://amazon.com/s?k=%s" " ")) 
     ("gh" . ("GitHub" "https://github.com/search?q=%s" " ")) 
     ("r" . ("Reddit" "https://reddit.com/search?q=%s" " ")) 
+    ("tw" . ("Twitter" "https://twitter.com/search?q=%s" " "))
     ("g" . ("Google" "https://google.com/search?q=%s" " ")) 
-    ("imdb" . ("IMDB" "https://imdb.com/find?s=all&q=%s")))
+    ("imdb" . ("IMDB" "https://imdb.com/find?s=all&q=%s"))
+    ("ddg" . ("DuckDuckGo" "https://duckduckgo.com/?q=%s")))
   "A list of bangs")
 
 (defun bang--annotate (b)
@@ -24,8 +26,9 @@
 	  (list :annotation-function
 		#'bang--annotate))
 	 (bang (completing-read "❕" !bangs))
-	 (template-url (caddr (assoc bang !bangs)))
-	 (search (read-string "🔍 "))
+	 (match (assoc bang !bangs))
+	 (template-url (caddr match))
+	 (search (read-string (or (cadddr match) "🔍 ")))
 	 (url (format template-url search)))
     (browse-url url)))
 
