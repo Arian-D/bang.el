@@ -1,3 +1,6 @@
+(require 'all-the-icons)
+
+
 (defcustom !bangs
   '(("w" . ("Wikipedia"
   "https://en.wikipedia.org/w/index.php?search=%s" " "))
